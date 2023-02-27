@@ -1,16 +1,13 @@
 import mongoose from 'mongoose';
-
-const db = 'mongodb+srv://mario:notasdemario@notesapp.0codsfb.mongodb.net/test'
+import dotenv from 'dotenv';
 
 export const connectDb = async () => {
-    try {
-        mongoose.set("strictQuery", false)
-        const conn = await mongoose.connect(db)
     
-        console.log(`Mongo connected: ${ conn.connection.name }`);
-    } catch {
-        console.error(`Error: ${ error.message }`);
-
-        process.exit(1)
+    try {
+        dotenv.config()
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log('db_online')
+    } catch (error) {
+        console.log('Error initializing DB')
     }
 }
